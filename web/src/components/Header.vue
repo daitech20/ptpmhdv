@@ -45,11 +45,11 @@
                         <template #overlay>
                             <a-menu>
                                 <a-menu-item>Hi, {{ user.username }}</a-menu-item>
-                                <!-- <a-menu-item>
+                                <a-menu-item>
                                     <router-link :to="{ name: 'account.detail', params: { username: user.username }}" >
                                         Profile
                                     </router-link>
-                                </a-menu-item> -->
+                                </a-menu-item>
                                 <a-menu-item @click="handleLogout">Logout</a-menu-item>
                             </a-menu>
                         </template>

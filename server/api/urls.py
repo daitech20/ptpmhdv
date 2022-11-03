@@ -8,10 +8,13 @@ from .views import CheckoutDetail, MyTokenObtainPairView, OrderDetail, OrderItem
     ProductCreate, ProductList, ProductUpdate, UserDetail, WareHouseCreate, \
     WareHouseList, WareHouseUpdate, GoodsReceiptCreate, GoodsReceiptList, ExposeCreate, \
     ExposeList, ExposesUpdate, PaymentAccountCreate, PaymentAccountList, PaymentAccountUpdate, \
-    OrderCreate, CheckoutList, CheckoutUpdate
+    OrderCreate, CheckoutList, CheckoutUpdate, ChangePassword, ResetPassword, UserList
 
 urlpatterns = [
     path('api/user/<str:username>', UserDetail.as_view(), name='users_detail'),
+    path('api/users', UserList.as_view(), name="list_user"),
+    path('api/user/change/password/<str:username>', ChangePassword.as_view(), name = "change_password"),
+    path('api/user/reset/password/<str:username>', ResetPassword.as_view(), name = "reset_password"),
     path('api/product/create', ProductCreate.as_view(), name='products_create'),
     path('api/products', ProductList.as_view(), name='products_list'),
     path('api/product/update/<int:id>', ProductUpdate.as_view(), name='products_update'),

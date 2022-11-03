@@ -2,7 +2,12 @@ from ast import Delete
 from django.shortcuts import render
 from rest_framework import serializers
 from rest_framework_simplejwt.views import TokenObtainPairView
-from .serializer import CheckoutSerializer, CheckoutUpdateSerializer, CustomJWTSerializer, OrderCreateSerializer, OrderItemListSerializer, OrderSerializer, OrderUpdateSerializer, PaymentSerializer, ProductSerializer, RegisterSerializer, UserSerializer, WareHouseSerializer, GoodsReceiptSerializer, ExposeSerializer, PaymentAccountSerializer, OrderItemSerializer
+from .serializer import CheckoutSerializer, CheckoutUpdateSerializer, \
+    CustomJWTSerializer, OrderCreateSerializer, OrderItemListSerializer, \
+    OrderSerializer, OrderUpdateSerializer, PaymentSerializer, ProductSerializer, \
+    RegisterSerializer, UserSerializer, WareHouseSerializer, GoodsReceiptSerializer, \
+    ExposeSerializer, PaymentAccountSerializer, OrderItemSerializer, ChangePasswordSerializer, \
+    ResetPasswordSerializer
 from .models import Expose, Product, WareHouse, GoodsReceipt, PaymentAccount, Payment, Order, OrderItem, Checkout
 from rest_framework import generics, status
 from rest_framework import permissions
@@ -17,7 +22,12 @@ class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = RegisterSerializer
 
-class UserDetail(generics.RetrieveAPIView):
+class UserList(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
@@ -261,3 +271,15 @@ class CheckoutUpdate(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = CheckoutUpdateSerializer
     permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]
     lookup_field = 'id'
+
+class ChangePassword(generics.UpdateAPIView):
+    queryset = User.objects.all()
+    permission_classes = [permissions.IsAuthenticated, ]
+    serializer_class = ChangePasswordSerializer
+    lookup_field = 'username'
+
+class ResetPassword(generics.UpdateAPIView):
+    queryset = User.objects.all()
+    permission_classes = [permissions.IsAuthenticated, ]
+    serializer_class = ResetPasswordSerializer
+    lookup_field = 'username'

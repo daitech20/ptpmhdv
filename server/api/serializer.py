@@ -88,7 +88,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         user.set_password(validated_data['password'])
         user.save()
 		
-        user.is_superuser = False
+        user.is_superuser = validated_data['is_superuser']
         user.save()
 
         return user
@@ -96,7 +96,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):    
      class Meta:
         model = User
-        fields = ('id', 'username', 'first_name', 'last_name', 'email')
+        fields = ('id', 'username', 'first_name', 'last_name', 'email', 'is_superuser')
         
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -308,3 +308,83 @@ class CheckoutUpdateSerializer(serializers.ModelSerializer):
         order.save()
         instance.save()
         return instance
+
+class ChangePasswordSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True, required=True)
+    new_password1 = serializers.CharField(write_only=True, required=True)
+    new_password2 = serializers.CharField(write_only=True, required=True)
+
+    class Meta:
+        model = User
+        fields = ['username', 'password', 'new_password1', 'new_password2']
+
+    def validate(self, attrs):
+        if attrs['new_password1'] != attrs['new_password2']:
+            raise serializers.ValidationError({"new_password": "Password fields didn't match"})
+        errors = dict()
+
+        try:
+            # validate the password and catch the exception
+            validators.validate_password(password=attrs['new_password1'])
+            # the exception raised here is different than serializers.ValidationError
+        except exceptions.ValidationError as e:
+            errors['new_password'] = list(e.messages)
+
+        try:
+            user = User.objects.get(username=attrs['username'])
+            if not user.check_password(attrs['password']):
+                raise serializers.ValidationError({"password": "Password wrong!"})
+        except exceptions.ValidationError as e:
+            errors['error'] = "User not found!"
+
+        if errors:
+            raise serializers.ValidationError(errors)
+
+        return attrs
+
+    def update(self, instance, validated_data):
+        username = validated_data.pop('username')
+        user = User.objects.get(username=username)
+        user.set_password(validated_data['new_password1'])
+        user.save()
+
+        return user
+
+		
+class ResetPasswordSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True, required=True)
+    password2 = serializers.CharField(write_only=True, required=True)
+
+    class Meta:
+        model = User
+        fields = ['username', 'password', 'password2']
+
+    def validate(self, attrs):
+        if attrs['password'] != attrs['password2']:
+            raise serializers.ValidationError({"password": "Password fields didn't match"})
+        errors = dict()
+
+        try:
+            # validate the password and catch the exception
+            validators.validate_password(password=attrs['password'])
+            # the exception raised here is different than serializers.ValidationError
+        except exceptions.ValidationError as e:
+            errors['password'] = list(e.messages)
+
+        try:
+            user = User.objects.get(username=attrs['username'])
+        except exceptions.ValidationError as e:
+            errors['error'] = "User not found!"
+
+        if errors:
+            raise serializers.ValidationError(errors)
+
+        return attrs
+
+    def update(self, instance, validated_data):
+        username = validated_data.pop('username')
+        user = User.objects.get(username=username)
+        user.set_password(validated_data['password'])
+        user.save()
+
+        return user

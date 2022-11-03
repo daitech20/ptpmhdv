@@ -7,11 +7,15 @@
                 <pie-chart-outlined/>
                 <router-link class="menu-link" :to="{name: 'dashboard'}">Dashboard</router-link>
             </a-menu-item>
-            <a-menu-item key="product.list">
+            <a-menu-item key="account" v-if="user && user.is_superuser">
+                <user-outlined/>
+                <router-link class="menu-link" :to="{name: 'account.list'}">Tài khoản</router-link>
+            </a-menu-item>
+            <a-menu-item key="product.list"  v-if="user && user.is_superuser == 0">
                 <gold-outlined/>
                 <router-link class="menu-link" :to="{name: 'product.list'}">Sản phẩm</router-link>
             </a-menu-item>
-            <a-menu-item key="product.list">
+            <a-menu-item key="payment.list"  v-if="user && user.is_superuser == 0">
                 <pay-circle-outlined/>
                 <router-link class="menu-link" :to="{name: 'payment.list'}">Giao dịch</router-link>
             </a-menu-item>
