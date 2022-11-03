@@ -5,12 +5,13 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 from .views import CheckoutDetail, MyTokenObtainPairView, OrderDetail, OrderItemCreate, OrderItemDetail, OrderItemList, OrderItemUpdate, OrderList, OrderUpdate, PaymentCreate, PaymentList, PaymentUpdate, RegisterView, \
-    ProductCreate, ProductList, ProductUpdate, WareHouseCreate, \
+    ProductCreate, ProductList, ProductUpdate, UserDetail, WareHouseCreate, \
     WareHouseList, WareHouseUpdate, GoodsReceiptCreate, GoodsReceiptList, ExposeCreate, \
     ExposeList, ExposesUpdate, PaymentAccountCreate, PaymentAccountList, PaymentAccountUpdate, \
     OrderCreate, CheckoutList, CheckoutUpdate
 
 urlpatterns = [
+    path('api/user/<str:username>', UserDetail.as_view(), name='users_detail'),
     path('api/product/create', ProductCreate.as_view(), name='products_create'),
     path('api/products', ProductList.as_view(), name='products_list'),
     path('api/product/update/<int:id>', ProductUpdate.as_view(), name='products_update'),

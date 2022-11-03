@@ -93,15 +93,24 @@ class RegisterSerializer(serializers.ModelSerializer):
 
         return user
 
+class UserSerializer(serializers.ModelSerializer):    
+     class Meta:
+        model = User
+        fields = ('id', 'username', 'first_name', 'last_name', 'email')
+        
+
 class ProductSerializer(serializers.ModelSerializer):
     user = serializers.ReadOnlyField(source='user.username')
-    image = Base64ImageField()
+    image = Base64ImageField(required=False)
 
     class Meta:
         model = Product
         fields = ('name', 'description', 'image', 'price', 'user', 'barcode', 'id')
         extra_kwargs = {
             'barcode': {
+                'required': False
+            },
+            'image': {
                 'required': False
             }
         }

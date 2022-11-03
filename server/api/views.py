@@ -2,7 +2,7 @@ from ast import Delete
 from django.shortcuts import render
 from rest_framework import serializers
 from rest_framework_simplejwt.views import TokenObtainPairView
-from .serializer import CheckoutSerializer, CheckoutUpdateSerializer, CustomJWTSerializer, OrderCreateSerializer, OrderItemListSerializer, OrderSerializer, OrderUpdateSerializer, PaymentSerializer, ProductSerializer, RegisterSerializer, WareHouseSerializer, GoodsReceiptSerializer, ExposeSerializer, PaymentAccountSerializer, OrderItemSerializer
+from .serializer import CheckoutSerializer, CheckoutUpdateSerializer, CustomJWTSerializer, OrderCreateSerializer, OrderItemListSerializer, OrderSerializer, OrderUpdateSerializer, PaymentSerializer, ProductSerializer, RegisterSerializer, UserSerializer, WareHouseSerializer, GoodsReceiptSerializer, ExposeSerializer, PaymentAccountSerializer, OrderItemSerializer
 from .models import Expose, Product, WareHouse, GoodsReceipt, PaymentAccount, Payment, Order, OrderItem, Checkout
 from rest_framework import generics, status
 from rest_framework import permissions
@@ -16,6 +16,12 @@ class MyTokenObtainPairView(TokenObtainPairView):
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = RegisterSerializer
+
+class UserDetail(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    lookup_field = 'username'
 
 class ProductCreate(generics.CreateAPIView):
     queryset = Product
