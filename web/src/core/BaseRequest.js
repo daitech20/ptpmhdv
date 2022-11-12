@@ -3,7 +3,7 @@ import authService from '../services/qltaphoa/auth.service';
 import { authStore } from '../store/auth.store';
 import { mapActions, mapState } from 'pinia';
 import router from '../routes'
-const apiUrl = 'http://192.168.1.15:8000/api/';
+const apiUrl = import.meta.env.VITE_API_BASE_URL.trimEnd('/')+'/api/';
 
 export default {
     ...mapActions(authStore, ['setAccessToken', 'clearAccessToken', 'clearRefreshToken', 'clearUser']),
