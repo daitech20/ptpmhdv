@@ -2,8 +2,8 @@
     <a-layout>
         <a-page-header
         style="border: 1px solid rgb(235, 237, 240)"
-        title="Product detail"
-        sub-title="This is a subtitle of detail product page" />
+        title="Chi tiết sản phẩm"
+        sub-title="" />
         <a-layout-content style="padding: 0 50px">
             <a-form
                 :model="product"

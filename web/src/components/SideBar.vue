@@ -19,6 +19,10 @@
                 <pay-circle-outlined/>
                 <router-link class="menu-link" :to="{name: 'payment.list'}">Giao dịch</router-link>
             </a-menu-item>
+            <a-menu-item key="order.list"  v-if="user && user.is_superuser == 0">
+                <ordered-list-outlined />
+                <router-link class="menu-link" :to="{name: 'order.list'}">Đơn hàng</router-link>
+            </a-menu-item>
         </a-menu>
     </a-layout-sider>
 </template>
@@ -27,7 +31,7 @@
 import { mapActions } from 'pinia'
 import { appearance } from '../store/appearance'
 import BaseRequest from '../core/BaseRequest.js'
-import { PieChartOutlined, UserOutlined, MessageOutlined, GoldOutlined, PayCircleOutlined } from '@ant-design/icons-vue'
+import { PieChartOutlined, UserOutlined, MessageOutlined, GoldOutlined, PayCircleOutlined, OrderedListOutlined } from '@ant-design/icons-vue'
 export default {
     data() {
         return {
@@ -45,7 +49,7 @@ export default {
         ...mapActions(appearance, ['isSidebarCollapased', 'setSidebarCollapsed']),
     },
     components: {
-        PieChartOutlined, UserOutlined, MessageOutlined, GoldOutlined, PayCircleOutlined
+        PieChartOutlined, UserOutlined, MessageOutlined, GoldOutlined, PayCircleOutlined, OrderedListOutlined
     }
 }
 </script>

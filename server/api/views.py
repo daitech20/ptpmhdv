@@ -49,8 +49,8 @@ class ProductList(generics.ListAPIView):
     def get_queryset(self):
         user = self.request.user
         if user.is_superuser:
-            return Product.objects.all()
-        return Product.objects.filter(user=user)
+            return Product.objects.all().order_by('-id')
+        return Product.objects.filter(user=user).order_by('-id')
 
 class ProductUpdate(generics.RetrieveUpdateDestroyAPIView):
     queryset = Product
@@ -143,8 +143,8 @@ class PaymentAccountList(generics.ListAPIView):
     def get_queryset(self):
         user = self.request.user
         if user.is_superuser:
-            return PaymentAccount.objects.all()
-        return PaymentAccount.objects.filter(user=user)
+            return PaymentAccount.objects.all().order_by('-id')
+        return PaymentAccount.objects.filter(user=user).order_by('-id')
 
 class PaymentAccountUpdate(generics.RetrieveUpdateDestroyAPIView):
     queryset = PaymentAccount
@@ -168,8 +168,8 @@ class PaymentList(generics.ListAPIView):
     def get_queryset(self):
         user = self.request.user
         if user.is_superuser:
-            return Payment.objects.all()
-        return Payment.objects.filter(user=user)
+            return Payment.objects.all().order_by('-id')
+        return Payment.objects.filter(user=user).order_by('-id')
 
 class PaymentUpdate(generics.RetrieveUpdateDestroyAPIView):
     queryset = Payment
@@ -193,8 +193,8 @@ class OrderItemList(generics.ListAPIView):
     def get_queryset(self):
         user = self.request.user
         if user.is_superuser:
-            return OrderItem.objects.all()
-        return OrderItem.objects.filter(user=user)
+            return OrderItem.objects.all().order_by('-id')
+        return OrderItem.objects.filter(user=user).order_by('-id')
 
 class OrderItemDetail(generics.RetrieveAPIView):
     queryset = OrderItem
@@ -224,8 +224,8 @@ class OrderList(generics.ListAPIView):
     def get_queryset(self):
         user = self.request.user
         if user.is_superuser:
-            return Order.objects.all()
-        return Order.objects.filter(user=user)
+            return Order.objects.all().order_by('-id')
+        return Order.objects.filter(user=user).order_by('-id')
 
 class OrderDetail(generics.RetrieveAPIView):
     queryset = Order
@@ -257,8 +257,8 @@ class CheckoutList(generics.ListAPIView):
     def get_queryset(self):
         user = self.request.user
         if user.is_superuser:
-            return Checkout.objects.all()
-        return Checkout.objects.filter(user=user)
+            return Checkout.objects.all().order_by('-id')
+        return Checkout.objects.filter(user=user).order_by('-id')
 
 class CheckoutDetail(generics.RetrieveAPIView):
     queryset = Checkout

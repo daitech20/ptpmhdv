@@ -2,8 +2,8 @@
     <a-layout>
         <a-page-header
         style="border: 1px solid rgb(235, 237, 240)"
-        title="Products"
-        sub-title="This is a products of store " />
+        title="Sản phẩm"
+        sub-title="Danh mục sản phẩm" />
         <a-layout-content style="padding: 0 50px">
             <router-link :to="{ name: 'product.create' }" >
                 <a-button class="editable-add-btn" style="margin-bottom: 8px">Add</a-button>
@@ -64,11 +64,6 @@ export default({
 	mounted() {
 		this.getData()
 	},
-	watch: {
-		value: function() {
-		this.getProducts()
-		}
-	},
 	computed: {
 		...mapState(authStore, ['isLoggedIn', 'user'])
 	},
@@ -96,7 +91,7 @@ export default({
 				key: 'description'
 				},
 				{
-				title: 'Bracode',
+				title: 'Mã qr',
 				dataIndex: 'bracode',
 				key: 'bracode'
 				},
@@ -106,7 +101,7 @@ export default({
 				key: 'price'
 				},
                 {
-				title: 'Option',
+				title: 'Lựa chọn',
 				dataIndex: 'option',
 				key: 'option'
 				},

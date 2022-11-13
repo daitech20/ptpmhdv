@@ -11,6 +11,8 @@ import AccountCreatePage from './views/account/AccountCreatePage.vue'
 import AccountDetailPage from './views/account/AccountDetailPage.vue'
 import AccountChangePasswordPage from './views/account/AccountChangePasswordPage.vue'
 import AccountResetPasswordPage from './views/account/AccountResetPasswordPage.vue'
+import OrderListPage from './views/order/OrderListPage.vue'
+import OrderDetailPage from './views/order/OrderDetailPage.vue'
 
 const routes = [
     {
@@ -71,6 +73,17 @@ const routes = [
         name: 'payment.list',
         path: '/dashboard/payments',
         component: PaymentListPage
+    },
+    {
+        name: 'order.list',
+        path: '/dashboard/orders',
+        component: OrderListPage
+    },
+    {
+        name: 'order.detail',
+        path: '/dashboard/order/:order_id',
+        component: OrderDetailPage,
+        params: true
     }
 ]
 

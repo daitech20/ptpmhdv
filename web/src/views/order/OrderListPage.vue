@@ -2,14 +2,19 @@
     <a-layout>
         <a-page-header
         style="border: 1px solid rgb(235, 237, 240)"
-        title="Giao dịch"
-        sub-title="Lịch sử giao dịch " />
+        title="Hóa đơn"
+        sub-title="Danh sách hóa đơn" />
         <a-layout-content style="padding: 0 50px">
             <a-table class="ant-table-striped" :columns="columns" :data-source="data" :scroll="{ x: 1000, y: 500 }" :row-class-name="(_record, index) => (_record.status === 1 ? 'table-striped' : null)">
                 <template #bodyCell="{ column, record }">
 					<template v-if="column.dataIndex === 'status'">
 						<span v-if="record.status === 1" style="color:red">Thất bại</span>
                   		<span v-if="record.status === 0" style="color:greenyellow">Thành công</span>
+					</template>
+					<template v-if="column.dataIndex === 'id'">
+						<router-link :to="{ name: 'order.detail', params: { order_id: record.id }}" >
+							<a-button type="primary" size="small"> {{ record.id }}</a-button>
+						</router-link>   
 					</template>
                 </template>
 				
@@ -30,7 +35,7 @@ export default({
 	data() {
 		return {
 			columns: [],
-			payments: [],
+			orders: [],
 			errors: {},
 			data: [],
 			visible: false
@@ -56,26 +61,6 @@ export default({
 				key: 'amount'
 				},
 				{
-				title: 'Người gửi',
-				dataIndex: 'partnerName',
-				key: 'partnerName'
-				},
-				{
-				title: 'Sdt người gửi',
-				dataIndex: 'partnerId',
-				key: 'partnerId'
-				},
-				{
-				title: 'Sdt người nhận',
-				dataIndex: 'phoneUser',
-				key: 'phoneUser'
-				},
-				{
-				title: 'Nội dung',
-				dataIndex: 'comment',
-				key: 'comment'
-				},
-				{
 				title: 'Ngày tạo',
 				dataIndex: 'created',
 				key: 'created'
@@ -86,25 +71,20 @@ export default({
 				key: 'status'
 				}
 			];
-			this.getPayments()
+			this.getOrders()
 		},
-		getPayments: function() {
+		getOrders: function() {
 			this.data = []
-			BaseRequest.get('payments')
+			BaseRequest.get('orders')
 			.then(response => {
-				this.payments = response.data
-				for (const num in this.payments) {
-					if (this.payments[num].status != 2) {
+				this.orders = response.data
+				for (const num in this.orders) {
+					if (this.orders[num].status != 2) {
 						this.data.push({
-							name: this.payments[num].name,
-							amount: this.payments[num].amount,
-							partnerName: this.payments[num].partnerName,
-							partnerId: this.payments[num].partnerId,
-							phoneUser: this.payments[num].phoneUser,
-							comment: this.payments[num].comment,
-							status: this.payments[num].status,
-							created: this.payments[num].created,
-							id: this.payments[num].id,
+							amount: this.orders[num].amount,
+							status: this.orders[num].status,
+							created: this.orders[num].created,
+							id: this.orders[num].id
 						})
 					}
 				}

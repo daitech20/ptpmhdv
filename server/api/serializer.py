@@ -304,7 +304,8 @@ class CheckoutUpdateSerializer(serializers.ModelSerializer):
         instance.payment_type = validated_data["payment_type"]
         instance.status = validated_data["status"]
         order = Order.objects.get(checkout=instance)
-        order.status = 0
+        order.status = validated_data["status"]
+        instance.payment.status = validated_data["status"]
         order.save()
         instance.save()
         return instance

@@ -130,10 +130,10 @@ const OrderDetailScreen = ({navigation, route}) => {
                     <VStack space={4} w="100%" >
                         <Flex direction="row" mb="2.5" mt="1.5" alignItems>
                             <Center>
-                                    <Button bg="primary.500" onPress={() => navigation.navigate('Camera', {onSelectCamera: onSelectCamera})} >Them san pham </Button>
+                                    <Button bg="primary.500" onPress={() => navigation.navigate('Camera', {onSelectCamera: onSelectCamera})} >Thêm sản phẩm </Button>
                             </Center>
                             <Center>
-                                    <Button bg="secondary.500" onPress={() => deleteOrder()} >Xoa hoa don</Button>
+                                    <Button bg="secondary.500" onPress={() => deleteOrder()} >Xóa hóa đơn</Button>
                             </Center>
                         </Flex>
                     </VStack>
